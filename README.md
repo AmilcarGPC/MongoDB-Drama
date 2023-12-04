@@ -243,3 +243,123 @@ Detalles sobre los artículos de una factura.
 ## Descripción_de_la_importación_de_sus_datos
 
 ## Definir_y_describir_al_menos_5_sentencias_para_cada_una_de_las_operaciones_CRUD_(Create,_Read,_Update,_Delete)_en_la_BD
+
+## Create
+1. Para añadir un nuevo método de pago al sistema. (Crear un nuevo documento en el arreglo de documentos Ref_Payment_Methods)
+
+![Imagen_1](https://i.ibb.co/N14zKpP/MDB1.png)
+Originalmente hay tres métodos de pago en el sistema. Ingresamos la siguiente sentencia CRUD en el Shell de MongoDB Compass:
+```
+db.drama.updateOne(
+  { "_id": ObjectId("656bea965b9551f20b20a053") },
+  { 
+    $push: {
+      "Ref_Payment_Methods": {
+        "payment_method_code": "Efectivo",
+        "payment_method_description": "Ahora se puede pagar con efectivo"
+      }
+    }
+  }
+)
+```
+Podemos ver los cambios reflejados en la base de datos:
+![Imagen_2](https://i.ibb.co/VV5YpNJ/MDB2.png)
+
+2. Para añadir nuevas regiones en las que se podrán hacer negocios, originalmente el dataset maneja 8 regiones:
+
+![Imagen_3](https://i.ibb.co/0YhR6TB/MDB3.png)
+Para añadir una nueva región como Yucatán por ejemplo usamos la siguiente sentencia:
+```
+db.drama.updateOne(
+  { "_id": ObjectId("656bea965b9551f20b20a053") },
+  { 
+    $push: {
+      "Marketing_Regions": {
+        "Marketing_Region_Code": "YU",
+        "Marketing_Region_Name": "Merida Yucatan",
+        "Marketing_Region_Description": "Mercado local"
+      }
+    }
+  }
+)
+```
+Podemos ver los cambios reflejados en el dataset: hemos creado una nueva región.
+![Imagen_4](https://i.ibb.co/rFShyhP/MDB4.png)
+
+3. Para añadir un nuevo Cliente a la base de datos: Los clientes tienen una Address_ID como parte de sus atributos, el cual los relaciona con el arreglo de documentos Addresses, para saber su dirección, por lo que primero hay que crear una nueva Address (Direccion) para hacer referencia a esta.
+
+Usamos el siguiente comando para añadir una nueva Address al dataset:
+```
+db.drama.updateOne(
+  { "_id": ObjectId("656bea965b9551f20b20a053") },
+  { 
+    $push: {
+      "Addresses": {
+        "Address_ID": "973",
+        "Line_1": "Avenida 7",
+        "Line_2": "Numero 345 entre 21 y 23",
+        "City_Town": "Merida",
+        "State_County": "Yucatan"
+      }
+    }
+  }
+)
+```
+Después usamos el siguiente comando para añadir un nuevo cliente con la Address_ID : 973 el cual hace referencia a la Address que acabamos de crear:
+```
+db.drama.updateOne(
+  { "_id": ObjectId("656bea965b9551f20b20a053") },
+  { 
+    $push: {
+      "Clients": {
+	"Client_ID": "223",
+        "Address_ID": "973",
+        "Customer_Email_Address": "safs99@hotmail.com",
+	"Customer_Name": "Gerardo",
+	"Customer_Phone": "9992602264"
+      }
+    }
+  }
+)
+```
+Como podemos ver se ha añadido un nuevo cliente al dataset: 
+![Imagen_5](https://i.ibb.co/2gH8SpD/MDB5.png)
+
+4. Para crear un nuevo grupo de practica de Drama ingresamos la siguiente sentencia:
+
+```
+db.drama.updateOne(
+  { "_id": ObjectId("656bea965b9551f20b20a053") },
+  { 
+    $push: {
+      "Drama_Workshop_Groups": {
+        "Workshop_Group_ID": "966",
+        "Address_ID": "973",
+        "Currency_Code": "MXN",
+        "Marketing_Region_Code": "YU",
+        "Store_Name": "Grupo de dramatizacion Pensiones",
+        "Store_Phone": "9827382",
+        "Store_Email_Adresss": "dramapensiones@gmail.com"
+      }
+    }
+  }
+)
+```
+
+5. Para añadir un nuevo producto al dataset usamos la siguiente sentencia CRUD:
+
+```
+db.drama.updateOne(
+  { "_id": ObjectId("656bea965b9551f20b20a053") },
+  { 
+    $push: {
+      "Products": {
+        "Product_ID": "332",
+        "Product_Name": "Cursos de improvisacion",
+        "Product_Price": 460
+      }
+    }
+  }
+)
+```
+
