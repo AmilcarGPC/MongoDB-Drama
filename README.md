@@ -1,6 +1,6 @@
 # MongoDB-Drama
 
-![MongoDB Logo](https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/MongoDB_Logo.svg/2560px-MongoDB_Logo.svg.png)
+![MongoDB Logo](https://www.skillfinder.com.au/media/wysiwyg/mongodb-logo-skill-finder.png)
 
 Explora y practica MongoDB con este repositorio diseñado para aprender los fundamentos y avanzados conceptos de esta base de datos NoSQL. Incluye un ejercicio práctico para consolidar tus habilidades.
 
