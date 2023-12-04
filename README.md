@@ -236,7 +236,123 @@ Detalles sobre los artículos de una factura.
 | FK  REFERENCED TABLE |                              | Invoices (Invoice_ID)               | Customer_Orders (Order_ID)  | Order_Items (Order_Item_ID)             | Products (Product_ID)                 |              | |
 
 ## Descripción_del_modelado_del_dataset
-
+El dataset `cre_Drama_Worskshop_Groups.json` presenta un modelado de datos de tipo “documentos embebidos” (modelado de datos integrado), ya que cada uno de los 18 documentos por los que está conformado el archivo principal, contiene otros documentos (objetos) relacionados dentro de si mismo, por ejemplo, el documento “Ref_Payment_Methods”, el cual contiene 3 documentos que representan los métodos de pago disponibles.
+```
+{
+  "Ref_Payment_Methods": [
+    {
+      "payment_method_code": "American E",
+      "payment_method_description": "credit"
+    },
+    {
+      "payment_method_code": "MasterCard",
+      "payment_method_description": "debit"
+    },
+    {
+      "payment_method_code": "Visa",
+      "payment_method_description": "Visa"
+    }
+  ],
+  “…”: [
+    …
+  ],
+  …,
+  “…”: [
+    …
+  ]
+}
+```
+Por su parte, esta estrategia de modelado permite acceder a los datos relacionados mediante una sola consulta, además de que facilita el procesamiento de datos complejos y heterogéneos (datos que pueden variar en tamaño y estructura), dado que no impone una estructura fija ni un esquema predefinido para los datos, por ejemplo, los documentos dentro del documento "Invoice_Items", los cuales tienen un campo diferente entre ellos.
+```
+{
+  “…”: [
+    …
+  ],
+  …,
+  “…”: [
+    …
+  ],
+  "Invoice_Items": [
+    {
+      "Invoice_Item_ID": 1,
+      "Invoice_ID": 128,
+      "Order_ID": 1,
+      "Order_Item_ID": 5,
+      "Product_ID": 396,
+      "Order_Quantity": 2
+    },
+    {
+      "Invoice_Item_ID": 2,
+      "Invoice_ID": 162,
+      "Order_ID": 4,
+      "Order_Item_ID": 6,
+      "Product_ID": 191,
+      "Order_Quantity": 6,
+      "Other_Item_Details": "Good quality"
+    }
+  ]
+}
+```
+Así mismo, este modelado de datos es muy útil cuando se tienen datos que se acceden frecuentemente juntos, tienen una cardinalidad baja (pocos elementos) o tienen una relación 1 a 1 o 1 a muchos, puesto que, de lo contrario, un modelado de datos de tipo referencial (modelado de datos normalizado) sería lo más adecuado. Por otra parte, las operaciones en el modelado de documentos embebidos resultan mas rápidas, dado que aumentan el uso eficiente del cache en memoria mediante una realización de una cantidad menor de consultas de I/O, por ejemplo:
+```
+db.coleccion.replaceOne{
+  {
+    “_id”: ObjectId(“656bea965b9551f20b20a053)
+  },
+  {
+    Ref_Payment_Methods: [
+      {
+        payment_method_code: "PayPal",
+        payment_method_description: "online"
+      },
+      {
+        payment_method_code: "Cash",
+        payment_method_description: "cash"
+      }
+    ],
+    Ref_Service_Types: [
+      {
+        Service_Type_Code: "5",
+        Parent_Service_Type_Code: "1",
+        Service_Type_Description: "provide music service"
+      },
+      {
+        Service_Type_Code: "6",
+        Parent_Service_Type_Code: "1",
+        Service_Type_Description: "provide gaming service"
+      }
+    ],
+    Addresses: [
+      {
+        Address_ID: "400",
+        Line_1: "123 Main Street",
+        Line_2: "Apt. 456",
+        City_Town: "New York",
+        State_County: "New York"
+      },
+      {
+        Address_ID: "401",
+        Line_1: "456 Park Avenue",
+        Line_2: "Suite 789",
+        City_Town: "Los Angeles",
+        State_County: "California"
+      }
+    ],
+    Products: [
+      {
+        Product_ID: "12",
+        Product_Name: "music",
+        Product_Price: 50
+      },
+      {
+        Product_ID: "13",
+        Product_Name: "game",
+        Product_Price: 60
+      }
+    ]
+  }
+}
+```
 
 ## Descripción_de_la_BD_NoSQL_y_las_herramientas_que_se_utilizaron
 MongoDB es una base de datos NoSQL, lo que significa que a diferencia de las bases de datos SQL tradicionales, no utiliza tablas para organizar los datos. Principalmente es una base de datos de documentos, lo que significa que almacena los datos en estructuras tipo documento BSON (Binary JSON) que son tanto flexibles como escalables.
