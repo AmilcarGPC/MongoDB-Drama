@@ -11,7 +11,7 @@ Explora y practica MongoDB con este repositorio diseñado para aprender los fund
 - [Descripción_del_modelado_del_dataset](#Descripción_del_modelado_del_dataset)
 - [Descripción_de_la_BD_NoSQL_y_las_herramientas_que_se_utilizaron](#Descripción_de_la_BD_NoSQL_y_las_herramientas_que_se_utilizaron)
 - [Descripción_de_la_importación_de_sus datos](#Descripción_de_la_importación_de_sus_datos)
-- [Definir_y_describir_al_menos_5_sentencias_para_cada_una_de_las_operaciones_CRUD_(Create,_Read,_Update,_Delete)_en_la_BD](#Definir_y_describir_al_menos_5_sentencias_para_cada_una_de_las_operaciones_CRUD_(Create,_Read,_Update,_Delete)_en_la_BD)
+- [Definir_y_describir_al_menos_5_sentencias_para_cada_una_de_las_operaciones_CRUD_en_la_BD](#Definir_y_describir_al_menos_5_sentencias_para_cada_una_de_las_operaciones_CRUD_en_la_BD)
 
 ## Descripción_del_dataset
 
@@ -242,7 +242,7 @@ Detalles sobre los artículos de una factura.
 
 ## Descripción_de_la_importación_de_sus_datos
 
-## Definir_y_describir_al_menos_5_sentencias_para_cada_una_de_las_operaciones_CRUD_(Create,_Read,_Update,_Delete)_en_la_BD
+## Definir_y_describir_al_menos_5_sentencias_para_cada_una_de_las_operaciones_CRUD_en_la_BD
 
 ## Create
 1. Para añadir un nuevo método de pago al sistema. (Crear un nuevo documento en el arreglo de documentos Ref_Payment_Methods)
