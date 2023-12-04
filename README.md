@@ -239,8 +239,34 @@ Detalles sobre los artículos de una factura.
 
 
 ## Descripción_de_la_BD_NoSQL_y_las_herramientas_que_se_utilizaron
+MongoDB es una base de datos NoSQL, lo que significa que a diferencia de las bases de datos SQL tradicionales, no utiliza tablas para organizar los datos. Principalmente es una base de datos de documentos, lo que significa que almacena los datos en estructuras tipo documento BSON (Binary JSON) que son tanto flexibles como escalables.
+
+### Principales características de MongoDB:
+- **Modelo de datos flexible:** MongoDB no requiere un esquema fijo como las bases de datos SQL. En su lugar, permite a los desarrolladores crear documentos con estructuras de datos variadas.
+- **Escalabilidad horizontal:** MongoDB puede manejar grandes volúmenes de datos distribuyendo los datos en múltiples servidores. A medida que aumenta la carga de datos, se pueden agregar más servidores para manejarla.
+- **Alta disponibilidad:** MongoDB proporciona alta disponibilidad con su conjunto de réplicas. Cada conjunto de réplicas tiene un nodo primario que realiza todas las operaciones de escritura, y nodos secundarios que replican el conjunto de datos primario para recuperación de desastres y redundancia de datos.
+- **Variedad de aplicaciones:** desde almacenamiento de logs y caché hasta aplicaciones en tiempo real, procesamiento de big data y mucho más.
+
+Algunas empresas que utilizan MongoDB: MetLife, Bosch, Expedia, LinkedIn, Cisco e Ebay.
+
+### Herramientas utilizadas
+- **MongoDB Shell:** Es la terminal especializada para MongoDB. Nos permitió conectarnos a la base de datos y realizar consultas, configuraciones y otras acciones directamente desde la línea de comandos, por ejemplo, insertar nuevos datos.
+- **MongoDB Compass:** Se trata de la interfaz gráfica de usuario (GUI) de MongoDB. Nos permitió explorar y manipular las bases de datos de una manera más visual a través de botones, con el fin de simplificar las acciones dentro del mismo. En otras palabras, lo utilizamos como un navegador de datos. Nos permitió ver las colecciones y documentos en la base de datos, realizar consultas y modificar datos.
+- **MongoDB Atlas CLI:** Es una herramienta muy útil de línea de comandos para administrar la versión en la nube de MongoDB. Esto es útil para automatizar tareas y administrar bases de datos en la nube sin necesidad de tener instalado MongoDB en nuestra computadora, de igual manera permite una replicación más efectiva.
+- **MongoDB Command Line Database Tools:** Se define como un conjunto de utilidades de línea de comandos para trabajar con una implementación de MongoDB. Esta herramienta nos permitió realizar una variedad de tareas, como importar y exportar datos. Dentro de otras características importantes, funciona para realizar copias de seguridad y restauraciones, diagnosticar problemas y mucho más.
 
 ## Descripción_de_la_importación_de_sus_datos
+Para el repositorio de datos de donde se obtuvo toda la información utilizamos la plataforma Kaggle, con la siguiente colección llamada “Mongo DB/ Json datasets”. A continuación, se deja el enlace directo a dicho repositorio: [Mongo DB/ Json datasets](https://www.kaggle.com/datasets/shrashtisinghal/mongo-db-datsets?select=3-20-DELFSHAVEN.city.json). Dentro de esta publicación se encuentran numerosos datasets en buen estado, de modo que, decidimos tomar el archivo `cre_Drama_Worskshop_Groups.json`.
+
+El dataset está relacionado con la formación de grupos para talleres de teatro. El conjunto de datos incluye información sobre identificaciones únicas de los talleres, las direcciones donde se encuentran, los códigos de las monedas que utilizan, los códigos de las regiones de marketing, los nombres de las tiendas asociadas, los números de teléfono de contacto y las direcciones de correo electrónico. También hay detalles sobre los actores o artistas que están asociados con estos grupos de talleres de teatro.
+
+De manera muy general, creamos una base de datos llamada “drama” en nuestro MongoDB Compass.
+
+Realizado el punto anterior, nos conectamos con MongoDB atlas para acceder a la versión de la nube de nuestra base de datos recién creada.
+
+Debido a la simplicidad de MongoDB solo bastó con presionar en el botón “import data”, el cual nos preguntaba por seleccionar un formato de archivo válido, como .json o .csv. Finalmente, solo presionamos el botón importar ¡y listo!, nuestros archivos estaban adentro.
+
+Puesto que el archivo .json, se encontraba en un formato correcto listo para importar a MongoDB, no se requirió de pasos adicionales.
 
 ## Definir_y_describir_al_menos_5_sentencias_para_cada_una_de_las_operaciones_CRUD_en_la_BD
 
