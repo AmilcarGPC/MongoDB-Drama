@@ -237,9 +237,9 @@ Detalles sobre los artículos de una factura.
 
 ## Descripción_del_modelado_del_dataset
 
-Proporciona instrucciones claras sobre cómo instalar las dependencias y configurar el entorno para ejecutar tu proyecto.
 
 ## Descripción_de_la_BD_NoSQL_y_las_herramientas_que_se_utilizaron
 
-Proporciona instrucciones claras sobre cómo instalar las dependencias y configurar el entorno para ejecutar tu proyecto.
+## Descripción_de_la_importación_de_sus_datos
 
+## Definir_y_describir_al_menos_5_sentencias_para_cada_una_de_las_operaciones_CRUD_(Create,_Read,_Update,_Delete)_en_la_BD
