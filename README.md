@@ -505,3 +505,46 @@ A diferencia del método updateOne() el método replaceOne() solo va a actualiza
 db.drama.renameCollection("DramaCollection")
 ```
 En donde drama es el nombre de la colección actual en la que estamos trabajando y en el parámetro de renameCollection() ponemos el nuevo nombre que le queremos poner. 
+
+### Delete
+
+1. Para eliminar un Cliente cuyo nombre sea igual a Gerardo Diaz usamos la siguiente sentencia:
+
+```
+db.DramaCollection.updateOne(
+  { "Clients.Customer_Name": "Gerardo Diaz" },
+  { $pull: { "Clients": { "Customer_Name": "Gerardo Diaz" } } }
+)
+```
+Esta sentencia elimina un documento en el arreglo de Clients (Clientes) usando el comando $pull el cual cumpla las condiciones, en este caso que su Customer_Name sea Gerardo Diaz. 
+
+2. Para eliminar la descripción de un método de pago: MongoDB Compass nos permite eliminar valores ingresados a un documento directamente desde el GUI:
+
+![Imagen_13](https://i.ibb.co/sJC7V7Y/MDB13.jpg)
+Hay que hacer click en el botón que dice Edit document marcado en rojo.
+![Imagen_14](https://i.ibb.co/jbWVFCN/MDB14.png)
+Después en el botón que dice Remove field para eliminar un campo de un documento directamente desde la GUI.
+
+3. Para eliminar el documento Servicios: Para eliminar un documento el cual contiene otros documentos anidados: Lo podemos hacer directamente desde el GUI también
+
+![Imagen_15](https://i.ibb.co/V22hBGH/MDB15.png)
+Después de seleccionar el botón de Edit document mostrado anteriormente, hay que seleccionar el botón Remove field marcado en rojo alado del documento que queramos eliminar, en este caso Servicios. Esta operación va a remover los 15 documentos anidados dentro del documento Servicios.
+![Imagen_16](https://i.ibb.co/2N2qT9n/MDB16.png)
+Para confirmar los cambios hay que presionar en el botón UPDATE.
+
+4. Para eliminar el documento en el que se encuentran anidados todos los demás documentos: Se puede hacer directamente desde el GUI también, hay que presionar el botón que dice Remove document marcado en rojo para realizar esta operación.
+
+![Imagen_17](https://i.ibb.co/7XjCgLr/MDB17.png)
+Y finalmente presionar el botón DELETE para confirmar los cambios y eliminar el documento.
+![Imagen_18](https://i.ibb.co/6WP4BV8/MDB18.png)
+
+5. Para eliminar la colección en la que estamos trabajando: usamos la sentencia db.collection.drop() donde collection es el nombre de la colección que queremos eliminar, en nuestro caso será:
+
+```
+db.DramaCollection.drop()
+```
+También se puede hacer desde la GUI de Compass: 
+![Imagen_19](https://i.ibb.co/8M20zdV/MDB19.png)
+Hay que hacer clic en el botón con los tres puntos para desplegar el menú que contiene la opción Drop Collection.
+![Imagen_20](https://i.ibb.co/fxG1f3D/MDB20.png)
+Para confirmar es necesario escribir el nombre de la colección en la caja y hacer clic en el botón Drop Collection. 
