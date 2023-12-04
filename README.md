@@ -235,10 +235,6 @@ Detalles sobre los artículos de una factura.
 | PK or FK                    | PK                       | FK                             | FK                               | FK                                |FK                                    |                                   | |
 | FK  REFERENCED TABLE |                              | Invoices (Invoice_ID)               | Customer_Orders (Order_ID)  | Order_Items (Order_Item_ID)             | Products (Product_ID)                 |              | |
 
-
-
-Proporciona instrucciones claras sobre cómo instalar las dependencias y configurar el entorno para ejecutar tu proyecto.
-
 ## Descripción_del_modelado_del_dataset
 
 Proporciona instrucciones claras sobre cómo instalar las dependencias y configurar el entorno para ejecutar tu proyecto.
