@@ -362,4 +362,94 @@ db.drama.updateOne(
   }
 )
 ```
+### Read
 
+1. Para leer todos los documentos que existen en el dataset usamos la siguiente sentencia:
+
+```
+db.drama.find({})
+```
+Al no marcar ningún filtro de búsqueda entre las llaves este comando nos devuelve todos los documentos que encuentra en la base de datos drama, incluyendo los anidados.
+![Imagen_6](https://i.ibb.co/5YDXnkJ/MDB6.png)
+Como podemos observar la salida es muy grande.
+
+2. Para leer el arreglo de documentos que incluye los documentos con todos los Métodos de pago usamos la siguiente sentencia:
+
+```
+db.drama.aggregate([
+  {
+    $project: {
+	"_id": 0,  //para que no nos muestre la ID del objeto
+	"Ref_Payment_Methods": 1   // para que nos muestre solo los métodos de pago
+    }
+  }
+])
+```
+El método aggregate de MongoDB nos permite trabajar con arreglos de objectos y el comando $project: nos define que solo nos muestre los contenidos del arreglo Ref_Payment_Methods:
+![Imagen_7](https://i.ibb.co/B3CXRTb/MDB7.png)
+Como podemos observar la salida nos muestra las cuatro colecciones que se encuentran en el arreglo de colecciones de Ref_Payment_Methods.
+
+3. Para leer todos los Grupos de Drama que estén en Yucatán: Podemos realizar una búsqueda sobre el arreglo de colecciones Drama_Workshop_Groups el cual contiene todas las colecciones con la información de los Grupos de Drama, y filtrar los resultados que tengan como uno de sus valores la región YU con la siguiente sentencia:
+
+```
+db.drama.aggregate([
+  {
+    $project: {
+      "_id": 0, 
+      "Drama_Workshop_Groups": {
+        $filter: {
+          input: "$Drama_Workshop_Groups",
+          as: "region",
+          cond: {
+            $eq: ["$$region.Marketing_Region_Code", "YU"]
+          }
+        }
+      }
+    }
+  }
+])
+```
+El comando $filter nos ayuda a filtrar los resultados, solo regresando los cuales cumplan la condición de que su región (Marketing_Region_Code) sea igual a “YU”, gracias al comando $eq:
+![Imagen_8](https://i.ibb.co/3S56KSt/MDB8.png)
+Podemos observar que en la terminal solo nos regresó una colección que cumple la condición, la cual fue el Grupo de Drama que añadimos anteriormente en las sentencias Create.
+
+4. Para ver todas las Facturas que fueron pagadas con MasterCard. Usamos el siguiente comando para filtrar entre el arreglo de Facturas las que fueron pagadas con MasterCard y mostrar estas facturas que cumplen la condicion:
+
+```
+db.drama.aggregate([
+  {
+    $unwind: "$Invoices"
+  },
+  {
+    $match: {
+      "Invoices.payment_method_code": "MasterCard"
+    }
+  },
+  {
+    $group: {
+      _id: "$_id",
+      Invoices: { $push: "$Invoices" }
+    }
+  },
+  {
+    $project: {
+      _id: 0,
+      Invoices: 1
+    }
+  }
+])
+```
+Usamos el comando $unwind para deconstruir el arreglo de Facturas(Invoices) en documentos individuales, luego usa el comando $match para solo tomar en cuenta las facturas que cumplen la condicion de que su payment_method_code es MasterCard, después usa el comando $group junto con el comando $push para reconstruir el arreglo de Facturas que cumplen la condicion y finalmente el comando $project para regresar (leer) este nuevo arreglo de Facturas, ignorando su id.
+![Imagen_9](https://i.ibb.co/xYY8R2t/MDB9.png)
+Podemos observar que en la salida de la consola nos muestra todos los objetos (colecciones) del arreglo de colecciones Invoices que cumplen la condicion que su método de pago fue MasterCard. 
+
+5. Para encontrar al cliente que se llama Gerardo. Usamos el siguiente comando:
+
+```
+db.drama.find(
+  { },
+  { "_id": 0, "Clients": { $elemMatch: { "Customer_Name": "Gerardo" } } }
+)
+```
+Busca entre todos los documentos, al primer documento en la colección de documentos Clients que tenga como Customer_Name a Gerardo, podemos ver en la salida de la consola que si lo encontró (pues lo anadimos anteriormente)
+![Imagen_10](https://i.ibb.co/vJDx189/MDB10.png)
