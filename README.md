@@ -286,7 +286,7 @@ db.drama.updateOne(
 Podemos ver los cambios reflejados en el dataset: hemos creado una nueva región.
 ![Imagen_4](https://i.ibb.co/rFShyhP/MDB4.png)
 
-3. Para añadir un nuevo Cliente a la base de datos: Los clientes tienen una Address_ID como parte de sus atributos, el cual los relaciona con el arreglo de documentos Addresses, para saber su dirección, por lo que primero hay que crear una nueva Address (Direccion) para hacer referencia a esta.
+3. Para añadir un nuevo Cliente a la base de datos: Los clientes tienen una Address_ID como parte de sus atributos, el cual los relaciona con el arreglo de documentos Addresses, para saber su dirección, por lo que primero hay que crear una nueva Address (Dirección) para hacer referencia a esta.
 
 Usamos el siguiente comando para añadir una nueva Address al dataset:
 ```
@@ -413,7 +413,7 @@ El comando $filter nos ayuda a filtrar los resultados, solo regresando los cuale
 ![Imagen_8](https://i.ibb.co/3S56KSt/MDB8.png)
 Podemos observar que en la terminal solo nos regresó una colección que cumple la condición, la cual fue el Grupo de Drama que añadimos anteriormente en las sentencias Create.
 
-4. Para ver todas las Facturas que fueron pagadas con MasterCard. Usamos el siguiente comando para filtrar entre el arreglo de Facturas las que fueron pagadas con MasterCard y mostrar estas facturas que cumplen la condicion:
+4. Para ver todas las Facturas que fueron pagadas con MasterCard. Usamos el siguiente comando para filtrar entre el arreglo de Facturas las que fueron pagadas con MasterCard y mostrar estas facturas que cumplen la condición:
 
 ```
 db.drama.aggregate([
@@ -439,7 +439,7 @@ db.drama.aggregate([
   }
 ])
 ```
-Usamos el comando $unwind para deconstruir el arreglo de Facturas(Invoices) en documentos individuales, luego usa el comando $match para solo tomar en cuenta las facturas que cumplen la condicion de que su payment_method_code es MasterCard, después usa el comando $group junto con el comando $push para reconstruir el arreglo de Facturas que cumplen la condicion y finalmente el comando $project para regresar (leer) este nuevo arreglo de Facturas, ignorando su id.
+Usamos el comando $unwind para deconstruir el arreglo de Facturas(Invoices) en documentos individuales, luego usa el comando $match para solo tomar en cuenta las facturas que cumplen la condición de que su payment_method_code es MasterCard, después usa el comando $group junto con el comando $push para reconstruir el arreglo de Facturas que cumplen la condicion y finalmente el comando $project para regresar (leer) este nuevo arreglo de Facturas, ignorando su id.
 ![Imagen_9](https://i.ibb.co/xYY8R2t/MDB9.png)
 Podemos observar que en la salida de la consola nos muestra todos los objetos (colecciones) del arreglo de colecciones Invoices que cumplen la condicion que su método de pago fue MasterCard. 
 
@@ -451,5 +451,57 @@ db.drama.find(
   { "_id": 0, "Clients": { $elemMatch: { "Customer_Name": "Gerardo" } } }
 )
 ```
-Busca entre todos los documentos, al primer documento en la colección de documentos Clients que tenga como Customer_Name a Gerardo, podemos ver en la salida de la consola que si lo encontró (pues lo anadimos anteriormente)
+Busca entre todos los documentos, al primer documento en la colección de documentos Clients que tenga como Customer_Name a Gerardo, podemos ver en la salida de la consola que si lo encontró (pues lo añadimos anteriormente)
 ![Imagen_10](https://i.ibb.co/vJDx189/MDB10.png)
+
+### Update
+
+1. Para actualizar el nombre de un Cliente. Para cambiar el nombre del cliente Gerardo a Gerardo Diaz usamos la siguiente sentencia update:
+
+```
+db.drama.updateOne( { "Clients.Customer_Name" : "Gerardo"},
+                   {$set: { "Clients.$.Customer_Name" : "Gerardo Diaz"}})
+```
+
+2. Para actualizar el nombre del documento que contiene un arreglo de documentos en MongoDB usamos el siguiente comando:
+
+```
+db.drama.update(
+  { }, 
+  { $rename: { "Services": "Servicios" } },
+  { multi: true } 
+)
+```
+![Imagen_11](https://i.ibb.co/f2R2YJ2/MDB11.png)
+Podemos observar en la imagen que ahora el documento que antes se llamaba Services ahora se llama Servicios y que el Cliente que antes tenía como nombre(Customer_Name) a Gerardo ahora tiene como nombre a Gerardo Diaz.
+
+3. Para modificar algún servicio ya ingresado usamos la siguiente sentencia CRUD para modificar múltiples valores de un documento:
+
+```
+db.drama.updateOne( { "Servicios.Service_ID" : 421},
+                   {$set: { "Servicios.$.Product_Name" : "fotos grupales",
+															"Servicios.$.Product_Price": 1200}})
+```
+Usamos el método updateOne para actualizar el Servicio el cual se encuentra en el arreglo de documentos Servicios (le actualizamos el nombre anteriormente) cuyo Service_ID es igual a 421, y usamos el comando $set para establecerle nuevos valores a su Product_Name y Product_Price a “fotos grupales” y 1200 respectivamente.
+![Imagen_12](https://i.ibb.co/0VV2Sbp/MDB12.png)
+Podemos ver en la imagen que se reflejaron los cambios sobre el Servicio con ID 421 correctamente. 
+
+4. Para actualizar el primer documento que cumpla con una condición usamos la siguiente sentencia:
+
+```
+db.drama.replaceOne(
+  { "Clients.Customer_Name" : "Gerardo" },
+  {
+    "newField1": "new value 1",
+    "newField2": "new value 2",
+  }
+)
+```
+A diferencia del método updateOne() el método replaceOne() solo va a actualizar el primer documento que cumpla con la condición establecida en las primeras llaves, después va a remplazar los valores del documento por los nuevos que le estamos dando en newField y new value.
+
+5. Para actualizar el nombre de la colección en la que estamos trabajando usamos el siguiente comando:
+
+```
+db.drama.renameCollection("DramaCollection")
+```
+En donde drama es el nombre de la colección actual en la que estamos trabajando y en el parámetro de renameCollection() ponemos el nuevo nombre que le queremos poner. 
