@@ -13,6 +13,12 @@ Explora y practica MongoDB con este repositorio diseñado para aprender los fund
 - [Descripción_de_la_importación_de_sus datos](#Descripción_de_la_importación_de_sus_datos)
 - [Definir_y_describir_al_menos_5_sentencias_para_cada_una_de_las_operaciones_CRUD_en_la_BD](#Definir_y_describir_al_menos_5_sentencias_para_cada_una_de_las_operaciones_CRUD_en_la_BD)
 
+## Integrantes
+- **Gerardo Díaz Rubí**
+- **Amílcar Gilberto Pérez Canto**
+- **Daniel Rodríguez Orozco**
+- **Osmar Gael Sánchez Loeza**
+
 ## Descripción_del_dataset
 
 El dataset contiene información sobre diferentes entidades relacionadas con un negocio de fotografía y dramaturgia, así como productos asociados. Cada entidad tiene sus propios atributos y se identifica por un código o un ID, algunas otras se relacionan entre sí mediante claves foráneas. Este dataset sirve para muchas cosas en el negocio, como saber más de los clientes, los servicios, las reservas y el dinero que entra y sale. Además, ayuda a la gestión de clientes, pues proporciona un gran panorama sobre el contacto, las preferencias y los pedidos realizados con anterioridad (incluye información sobre tipos de servicios, precios y asignación de recursos).  En términos de contabilidad y finanzas, registra transacciones financieras, métodos de pago y detalles de facturación. También ayuda a controlar los productos que hay (rastreando reservas, órdenes y detalles de facturación), los artistas que trabajan y las zonas donde se ofrece el negocio. Con este dataset se puede hacer análisis para mejorar el negocio, conocer el mercado, planear el futuro y satisfacer al público. 
